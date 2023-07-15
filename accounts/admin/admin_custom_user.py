@@ -6,6 +6,7 @@ from accounts.models import CustomUser
 
 admin.site.unregister(Group)
 
+
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ('username', 'balance', 'is_active', 'is_staff', 'is_superuser')
@@ -15,13 +16,11 @@ class CustomUserAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Personal", {'fields': ('username', "password", 'balance')}),
         ("Permission", {'fields': ('is_active', 'is_staff', 'is_superuser')}),
-        ("Special Permission", {'fields': ("special_user_permission",)}),
 
     )
 
     add_fieldsets = (
         ("Personal", {'fields': ('username', "password", 'balance')}),
         ("Permission", {'fields': ('is_active', 'is_staff', 'is_superuser')}),
-        ("Special Permission", {'fields': ("special_user_permission",)}),
 
     )

@@ -22,5 +22,5 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        user = get_user_model().objects.create(**validated_data)
+        user = get_user_model().objects.create_user(**validated_data)
         return user
