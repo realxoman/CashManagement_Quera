@@ -1,0 +1,48 @@
+version: '3.3'
+services:
+  postgres:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - ./media/:/media/
+      - ./dbdata:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: "app_cashman"
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app/cashman/
+      - ./static:/app/cashman/static
+      - ./media:/app/cashman/media
+      - /var/log/cashman:/var/log/cashman
+    command: >
+      sh -c "
+        python3 manage.py makemigrations;
+        python3 manage.py migrate --noinput;
+        python3 manage.py collectstatic --noinput;
+        gunicorn --bind=0.0.0.0:8000 --timeout=90 --reload cashman.wsgi:application;
+      "
+    depends_on:
+      postgres:
+        condition: "service_healthy"
+
+networks:
+  default:
+    name: cashman
+    external: true
