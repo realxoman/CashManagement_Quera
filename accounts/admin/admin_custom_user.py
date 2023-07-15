@@ -1,25 +1,26 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
+
 from accounts.models import CustomUser
 
 
+admin.site.unregister(Group)
+
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'first_name',
-                    'last_name', 'is_active', 'is_staff', 'is_superuser')
-    search_fields = ('username', 'email', 'first_name', 'last_name')
+    list_display = ('username', 'balance', 'is_active', 'is_staff', 'is_superuser')
+    search_fields = ('username',)
     readonly_fields = ('password',)
 
     fieldsets = (
-        ("Personal", {'fields': ('username', "password",
-         'email', 'first_name', 'last_name',)}),
+        ("Personal", {'fields': ('username', "password", 'balance')}),
         ("Permission", {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ("Special Permission", {'fields': ("special_user_permission",)}),
 
     )
 
     add_fieldsets = (
-        ("Personal", {'fields': ('username', "password",
-         'email', 'first_name', 'last_name',)}),
+        ("Personal", {'fields': ('username', "password", 'balance')}),
         ("Permission", {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ("Special Permission", {'fields': ("special_user_permission",)}),
 

@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 
     # My Applications
     'accounts.apps.AccountsConfig',
-
+    'transactions.apps.TransactionsConfig'
 ]
 
 MIDDLEWARE = [
