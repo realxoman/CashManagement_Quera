@@ -1,4 +1,4 @@
-name: Neurocage Homecage
+name: CashMan
 on:
   push:
     branches:
