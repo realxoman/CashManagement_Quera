@@ -1,3 +1,4 @@
+from django.db import models
 from django.contrib.auth.models import AbstractUser
 from accounts.managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
@@ -6,6 +7,8 @@ from django.utils.translation import gettext_lazy as _
 class CustomUser(AbstractUser):
     objects = CustomUserManager()
     USERNAME_FIELD = 'username'
+
+    username = models.CharField(_("username"), max_length=128, unique=True)
 
     class Meta:
         verbose_name = _('User')
