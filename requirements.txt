@@ -12,6 +12,7 @@ gunicorn==20.1.0
 inflection==0.5.1
 jsonschema==4.18.3
 jsonschema-specifications==2023.6.1
+psycopg2==2.9.6
 PyJWT==2.7.0
 pytz==2023.3
 PyYAML==6.0

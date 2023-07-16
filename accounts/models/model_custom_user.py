@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Sum, Case, When
+from django.db.models import Sum, Q
 from django.contrib.auth.models import AbstractUser
 from accounts.managers import CustomUserManager
 from django.utils.translation import gettext_lazy as _
@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'username'
 
     username = models.CharField(_("Username"), max_length=128, unique=True)
-    balance = models.DecimalField(_("Balance"), max_digits=20, decimal_places=2, default=0)
+    balance = models.IntegerField(_("Balance"), default=0)
 
     class Meta:
         verbose_name = _('User')
@@ -24,20 +24,16 @@ class CustomUser(AbstractUser):
     def update_balance(self):
         balance = self.transaction_set.aggregate(
             income=Sum(
-                Case(
-                    When(transaction_type=TransactionType.INCOME,
-                         then='amount'),
+                    'amount',
+                    filter=Q(type=TransactionType.INCOME),
                     default=0,
-                    output_field=models.DecimalField()
-                )
+                    output_field=models.IntegerField()
             ),
             expense=Sum(
-                Case(
-                    When(transaction_type=TransactionType.EXPENSE,
-                         then='amount'),
+                    'amount',
+                    filter=Q(type=TransactionType.EXPENSE),
                     default=0,
-                    output_field=models.DecimalField()
-                )
+                    output_field=models.IntegerField()
             ),
         )
 
