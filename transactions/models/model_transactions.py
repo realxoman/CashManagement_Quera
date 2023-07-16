@@ -7,7 +7,7 @@ from shared import BaseModel, TransactionType, TransactionCategory
 
 class Transaction(BaseModel):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    transaction_type = models.IntegerField(choices=TransactionType.choices, default=TransactionType.EXPENSE)
+    type = models.IntegerField(choices=TransactionType.choices, default=TransactionType.EXPENSE)
     category = models.IntegerField(choices=TransactionCategory.choices, default=TransactionCategory.OTHER)
     date = models.DateField(default=timezone.now)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
