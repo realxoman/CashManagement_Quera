@@ -1,4 +1,5 @@
 # CashManagement_Quera
+![Untitled](https://github.com/realxoman/CashManagement_Quera/assets/38150985/49433581-e8c0-4e15-a4d1-949a65c7ddda)
 
 ## RUN ON DOCKER
 Backend project for Cash Management Quera<br/>
