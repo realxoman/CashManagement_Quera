@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'cashman.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-if env('ENGINE_DB') == 'postgresql':
+if env('ENGINE_DB', default="") == 'postgresql':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
